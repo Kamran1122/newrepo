@@ -521,9 +521,13 @@ $userId = $userRow['userId'];
                   function btnUrlSubmit(productId,userId){
                         // var url = $("input#"+productId).val()
                         //alert(url); 
+                        var url = "";
                     $(".textbox").each(function() {
-                        console.log($(this).val());
+                         url = $(this).val();
+                         
                     });
+                    console.log(url);
+                    url = "";
                    /*     
                     if (url!="") {
                     var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
