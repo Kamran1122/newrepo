@@ -1,3 +1,18 @@
+<?php
+ ob_start();
+ session_start();
+ require_once 'config.php';
+ 
+ // if session is not set this will redirect to login page
+ if( !isset($_SESSION['user']) ) {
+  header("Location: index.html");
+  exit;
+ }
+ // select loggedin users detail
+ $res=mysqli_query($db,"SELECT * FROM users WHERE userId=".$_SESSION['user']);
+ $userRow=mysqli_fetch_array($res);
+$userId = $userRow['userId'];
+?>
 <!doctype html>
 <html class="no-js" lang="zxx">
     <head>
@@ -6,6 +21,10 @@
         <title>Apptech</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- modernizr JS
+        ============================================ -->        
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 
 		<!-- favicon
 		============================================ -->		
@@ -56,9 +75,7 @@
         <!-- Style customizer (Remove these two lines please) -->
         <link rel="stylesheet" href="css/color/color-5.css">
         
-		<!-- modernizr JS
-		============================================ -->		
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+		
     </head>
     <body>
         <div class="wrapper" id="dashboard-wrapper">
@@ -70,7 +87,7 @@
                 <!-- Menu Area
                 ============================================ -->
                 <div id="main-menu" class="sticker">
-                    <div class="container">
+                    <div class="container" >
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="logo float-left">
@@ -84,7 +101,7 @@
                                             <li><a target="_blank" href="blog.html">BLOG</a></li>
                                             <li><a target="_blank" href="help.html">HELP CENTER</a></li>
                                             <li><a href="register.html">START A TRIAL</a></li>
-                                            <li><a href="login.html">LOGIIN</a></li>
+                                            <li><a href="logout.php?logout">LOGOUT</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -124,13 +141,13 @@
 
 
             <div class="question-area ptb-120">
-                <div class="container">
+                <div class="container" id="container-dashboard2">
                     <div class="row main-row">
                         <div class="col-md-9">
 
 
                             <!-- DASHBOARD CODE START -->
-            <div class="alert alert-information" style="background-color:#35DB7F !important; color:#FFFFFF;">
+            <div class="alert alert-information" style="background-color:#35DB7F !important; color:#FFFFFF;width: 100%;">
             <span >
                 Welcome! Now start adding products that you want to track by clicking <button class="btn information-box-button btn-primary" data-place="top"><i id="zmdi-white" class="zmdi zmdi-plus"></i> Add single product</button> below. <br /> After adding your product, simply click <button class="btn information-box-button btn-primary"><i id="zmdi-white" class="zmdi zmdi-plus" ></i><span> Add URL</span></button> to add both your own and your competitors' exact product links for that product. <br /> You can also use our <button class="btn information-box-button btn-primary" data-place="top"><i id="zmdi-white" class="zmdi zmdi-view-list"></i> Batch Import <sup>beta</sup></button> feature to add multiple products and URLs in bulk. <br /> <br />
                 Need help? Check out our tutorials:             <i id="zmdi-white" class="zmdi zmdi-file"></i>
@@ -139,26 +156,32 @@
                 <a href="#" class="video_tutorial"> Video Tutorial</a>
             </span>
         </div> 
-        <h2 style="width:100%;float:left;"> </h2> <!-- TOP ALERT -->
+        <!-- TOP ALERT -->
 
-        <div class="well-dashboard"  >
-            <div class="container" >
+        <div class="well-dashboard2">
+            <div class="container">
                 <div class="form-div" style="display: none;" >
-                <form class="form-group" >
+                <form class="form-group" method="post" action="">
                     <label>Product name:</label><br>
-                    <input type="text" name="" class="textbox" ><br><br>
+                    <input type="text" id="proName" name="productName" class="textbox" >
+                    <span class="text-danger" id="productName" ></span>
+                    <br><br>
                     <label>Product code:</label><br>
-                    <input type="text" name="" class="textbox" ><br><br>
+                    <input type="text" name="productCode" id="proCode" class="textbox" >
+                    <span class="text-danger" id="productCode" ></span>
+                    <br><br>
                     <label>Category:</label><br>
-                    <input type="text" name="" class="textbox" ><br><br>
+                    <input type="text" name="productCategory" id="proCategory" class="textbox" >
+                    <span class="text-danger" id="productCategory" ></span>
+                    <br><br>
                     <label>Brand:</label><br>
-                    <input type="text" name="" class="textbox" ><br><br>
+                    <input type="text" name="productBrand" id="proBrand" class="textbox" >
+                    <span class="text-danger" id="productBrand" ></span>
+                    <br><br>
                     
-                    <button type="button" class="btn btn-success btn-small" ><li class="zmdi zmdi-check" ></li></button>
+                    <button type="button" class="btn btn-success btn-small" id="formSub" onclick="proFormSub(<?php echo $userId; ?>)"><li class="zmdi zmdi-check" ></li></button>
                     <button type="button" class="btn btn-danger btn-small" id="formSlideUp" ><li class="zmdi zmdi-close" ></li></button>
                     </div>
-                    
-
                 </form>
             </div>
 
@@ -166,13 +189,140 @@
                 <button class="btn btn-primary single-product-btn" id="formSlideDown" ><li class="zmdi zmdi-plus" ></li> Add single product</button>
                 
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" ><li class="zmdi zmdi-view-list" ></li> Batch Import <sup>beta</sup></button>
-            </div>
-        </div>
-         
-        <!-- DASHBOARD CODE END -->
+            <div id="products-div" >
+                <?php
+                $result = mysqli_query($db,"select productId,productName,productCode,productCategory,productBrand from singleProduct where userId='$userId order by productId desc'");
 
-                        </div> 
-                  
+    while ($row = mysqli_fetch_assoc($result))
+        {
+            
+            ?>
+                
+                <div class='products-view' >
+                    <div class='row' >
+                        <div class='col-md-9' >
+                            <a href='#'' style='color: black; '>
+                            <h3>
+                                <span class='zmdi zmdi-star'></span>
+                                <span id='showProName'><?php echo $row['productName'] ?></span>
+                            </h3>
+                            </a>
+                        </div>
+                        <div class='col-md-3' >
+                            <button class='btn' ><span class='zmdi zmdi-calendar' ></span></button>
+                            <button class='btn' ><span class='zmdi zmdi-edit' ></span></button>
+                            <button class='btn' ><span class='zmdi zmdi-close' ></span></button>
+                        </div>
+                    </div>
+                    <div class='row' >
+                        <div class='col-md-9' >
+                            <div style='display: inline-flex; font-size: 20px;'' >
+                                <div id='showBrand'><?php echo $row['productBrand'] ?></div>
+                                <div id='showCategory'>
+                                </div><div id='showCode'>
+                                &nbsp<?php echo $row['productCode'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-md-3' >
+                        <button class='btn' ></button>
+                        <button class='btn' ></button>
+                        <button class='btn' ></button>
+                        <button class='btn' ></button>
+                    </div>
+                </div>
+            </div>
+    
+    
+
+
+               <!-- <hr>
+                <div class="products-view" >
+                    <div class="row" >
+                        <div class="col-md-9" >
+                            <a href="#" style="color: black; "><h3><span class="zmdi zmdi-star"></span>
+                            <span id="showProName">Product Name this the product name</span></h3></a>
+                        </div>
+                        <div class="col-md-3" >
+                            <button class="btn" ><span class="zmdi zmdi-calendar" ></span></button>
+                            <button class="btn" ><span class="zmdi zmdi-edit" ></span></button>
+                            <button class="btn" ><span class="zmdi zmdi-close" ></span></button>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-md-9" >
+                            
+                            <div style="display: inline-flex; font-size: 20px;" >
+                                <div id="showBrand">Company</div><div id="showCategory"></div><div id="showCode">&nbspProduct Code</div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-3" >
+                            <button class="btn" ></button>
+                            <button class="btn" ></button>
+                            <button class="btn" ></button>
+                            <button class="btn" ></button>
+                        </div>
+                    </div>
+                </div> 
+
+                <table class="table table-condensed table-striped products_table" >
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Price</th>
+                            <th>Change</th>
+                            <th>Position</th>
+                            <th>Stock</th>
+                            <th class="last_update" >Updated</th>
+                            <th class="last_update_short" >Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="td_site" >
+                                <a href="#">Company</a>
+                            </td>
+                            <td class="td_price" >
+                                <i class="zmdi zmdi-time" ></i>
+                            </td>
+                            <td class="td_change" >
+                                <i class="zmdi zmdi-time" ></i>
+                            </td>
+                            <td class="td_position" >
+                                <i><strong>-</strong></i>
+                            </td>
+                            <td class="td_stock" >
+                                <i><strong>-</strong></i>
+                            </td>
+                            <td class="td_update" >
+                                Will be updated in a few hours.
+                            </td>
+                            <td class="td_edit" >
+                                <a href="#"><i class="zmdi zmdi-edit" ></i></a>
+                                <a href="#"><i class="zmdi zmdi-close" ></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> -->
+                <div class="url_field" id="<?php echo $row['productId'] ?>" >
+                    <label>URL: </label>
+                    <input type="text" id="<?php echo $row['productId']; ?>" class="textbox" style="padding:5px; width:40%;">
+                    <button class="btn btn-success" onclick="btnUrlSubmit( <?php echo $row['productId']; ?>, <?php echo $userId; ?> )" > <span  class="zmdi zmdi-check" ></span> </button>
+                    <button class="btn btn-danger" onclick="btnClose(<?php echo $row['productId'] ?>)" > <span  class="zmdi zmdi-close" ></span> </button>
+                </div>
+                <button class="btn btn-success" onclick="btnUrl(<?php echo $row['productId'] ?>);" >
+                    <span class="zmdi zmdi-plus" ></span> Add URL
+                </button>       <hr>          <?php
+
+    } ?>
+            </div>
+        </div>    
+
+    </div>
+
+</div>
+    
                         <div class="col-md-3 panel-sidebar">
                             
                                 <div class="panel-well" >
@@ -361,11 +511,33 @@
 		<!-- plugins JS
 		============================================ -->		
         <script src="js/plugins.js"></script>
-		<!-- main JS
-		============================================ -->		
-        <script src="js/main.js"></script>
+		
+        <!-- main JS
+		============================================ -->
+        <script src="js/main.js"></script>    
+        <script>
+                    
 
-        
-        
+                  function btnUrlSubmit(productId,userId){
+                        // var url = $("input#"+productId).val()
+                        //alert(url); 
+                    $(".textbox").each(function() {
+                        console.log($(this).val());
+                    });
+                   /*     
+                    if (url!="") {
+                    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+                   if (!regexp.test(url)) {
+                            alert("its not valid");
+                        } 
+                  else
+                        {
+                            alert("its valid");
+                        }
+                    } */
+
+                    }
+        </script>
     </body>
+    
 </html>

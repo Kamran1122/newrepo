@@ -11,7 +11,7 @@
     
     CSS INDEX
     ===================
-	
+    
     1. Theme default css
     2. Main menu
     3. Service area
@@ -305,7 +305,7 @@
 }
 .textbox{
     border-radius: 4px;
-    padding: 3px;
+    padding: 5px;
     border-color: #bbb;
 }
 .price-changes{
@@ -321,11 +321,24 @@
     padding: 20px;
 
 }
+.well-dashboard2{
+        background-color:#eee; padding: 40px; border-radius: 6px;
+            }
+            
+.products-view{
+    background-color: white; margin-top: 5%; padding: 20px; border-radius: 6px;
+    display: block; 
+}
+.url_field{
+    display: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 @media (max-width: 767px)
 {
      .main-row{
-        margin-top:50px;
+        margin-top:10px;
     }
     .single-product-btn{
         margin-bottom: 20px;
@@ -408,6 +421,22 @@ ul.tab li.active {
 #zmdi-white{
     color: white;
 }
+@media (max-width:768px){.products_table td{white-space:nowrap} .products_table .td_span{margin-right:0}}
+@media (max-width:649px){.products_table{display:block}.products_table thead,.products_table tbody,.products_table th,.products_table td,.products_table tr{display:block}
+.products_table tr{margin-bottom:20px} .products_table thead{display:none} .products_table.table-striped td{background:#f9f9f9 !important} 
+.products_table td{border:none;border-bottom:1px solid #eee;position:relative;padding-left:50%;height:30px !important;line-height:30px;width:49%;font-size:12px}
+.products_table td span{float:left} .products_table td i{display:block;width:100%;margin:0;margin-top:7px} .products_table td:last-child{display:none} .products_table td:first-child{width:49%} .products_table td.td_change i.icon-minus{margin-left:0} .products_table td .price_position{width:100%}.products_table td .price_position .mobile{float:left;margin-left:2px}
+.products_table td .price_position .td_span{float:left;width:62px;margin-top:5px} 
+.products_table td:before{position:absolute;top:6px;left:6px;width:45%;padding-right:10px;white-space:nowrap}
+ .td_position .icon-minus {margin-left: 0 !important}}
+ @media (max-width: 767px){
+#container-dashboard2{
+    width: 360px;
+}
+}
+    
+
+
 /*DASHBOARD 2 CSS ENDS HERE*/
 
 
@@ -899,7 +928,7 @@ i {
     padding: 8px 0 14px;
 }
 /*----------------------
-	2. Main menu
+    2. Main menu
 ------------------------*/
 
 #main-menu.stick {
@@ -922,7 +951,7 @@ i {
     padding-top: 8px;
 }
 #main-menu {
-	background: rgba(0,188,212,0.8) none repeat scroll 0 0 !important;
+    background: rgba(0,188,212,0.8) none repeat scroll 0 0 !important;
     left: 0;
     padding: 30px 0;
     position: absolute;
@@ -1059,7 +1088,7 @@ a.button:hover span {
     margin-top: 42px;
 }
 /*----------------------
-	3. Service area
+    3. Service area
 ------------------------*/
 
 .single-item-icon i {
@@ -1085,7 +1114,7 @@ a.button:hover span {
     transform: translateY(-17px);
 }
 /*----------------------
-	4. About area
+    4. About area
 ------------------------*/
 
 .about-bottom-left > h1 {
@@ -1095,14 +1124,14 @@ a.button:hover span {
     margin-bottom: 13px;
     text-transform: uppercase;
     line-height: 30px;
-	text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
+    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
 }
 .about-bottom-left > h1 span {
     font-weight: bold;
 }
 .about-bottom-left > h3 {
     color: #eee;
-		text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
+        text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
     font-size: 28px;
     font-weight: 600;
     margin-bottom: 24px;
@@ -1122,7 +1151,7 @@ a.button:hover span {
 }
 p.about-pb {
     padding-bottom: 12px;
-	color: #eee;
+    color: #eee;
 }
 .about-bottom-left > p {
     padding-right: 36px;
@@ -1138,7 +1167,7 @@ p.about-pb {
     padding-top: 46px;
 }
 /*----------------------
-	5. Feature area
+    5. Feature area
 ------------------------*/
 
 .title-style > h1 {
@@ -1235,7 +1264,7 @@ p.about-pb {
 .feature-list .sfl-lsft:last-child {
     margin-left: -131px;
     padding-right: 143px;
-	padding-top:14px;
+    padding-top:14px;
     position: relative;
     z-index: 99;
 }
@@ -1261,7 +1290,7 @@ p.about-pb {
     width: 505px;
 }
 /*----------------------
-	6. Choose area
+    6. Choose area
 ------------------------*/
 
 .choose-img > img {
@@ -1278,7 +1307,7 @@ p.about-pb {
     margin-left: -30px;
 }
 /*----------------------
-	7. Video area 
+    7. Video area 
 ------------------------*/
 
 .bg-img-2 {
@@ -1322,7 +1351,7 @@ p.about-pb {
     color: #1879Fd;
 }
 /*----------------------
-	8. Download area
+    8. Download area
 ------------------------*/
 
 .bg-img-3 {
@@ -1352,8 +1381,8 @@ p.about-pb {
 }
 .download-links a:hover {
     background-color: rgba(255,255,255,0.5);
-	
-		border: 1px solid #000;
+    
+        border: 1px solid #000;
 }
 .download-links a i {
     color: #666;
@@ -1385,7 +1414,7 @@ p.about-pb {
 
 }
 /*----------------------
-	9. Question area
+    9. Question area
 ------------------------*/
 
 .question-area .panel-group {
@@ -1460,7 +1489,7 @@ p.about-pb {
     content: "\f273";
 }
 /*----------------------
-	10. Screenshot area
+    10. Screenshot area
 ------------------------*/
 
 .screenshot-slider .slick-list {
@@ -1537,7 +1566,7 @@ p.about-pb {
     padding: 0 125px;
 }
 /*----------------------
-	11. Review area
+    11. Review area
 ------------------------*/
 
 .reating-icon i {
@@ -1589,7 +1618,7 @@ p.about-pb {
     cursor: pointer;
 }
 /*----------------------
-	12. Pricing area
+    12. Pricing area
 ------------------------*/
 
 .single-price-package {
@@ -1708,7 +1737,7 @@ p.about-pb {
     color: #fff;
 }
 /*----------------------
-	13. Counter area
+    13. Counter area
 ------------------------*/
 
 .counter {
@@ -1757,7 +1786,7 @@ span.timer {
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
 }
 /*----------------------
-	14. Newsletter area
+    14. Newsletter area
 ------------------------*/
 
 .bg-img-4 {
@@ -1818,7 +1847,7 @@ span.timer {
     color: #ffffff;
 }
 /*----------------------
-	15. Slider logo
+    15. Slider logo
 ------------------------*/
 
 .single-item2 > a img {
@@ -1834,7 +1863,7 @@ span.timer {
     border: 1px solid #fff;
 }
 /*----------------------
-	16. Contact area
+    16. Contact area
 ------------------------*/
 
 .contact-from input {
@@ -1958,7 +1987,7 @@ input.submit:hover {
     color: #fff;
 }
 /*----------------------
-	17. Footer area
+    17. Footer area
 ------------------------*/
 
 .footer-icon li {
@@ -2150,7 +2179,7 @@ input.submit:hover {
 }
 .z-use {
     z-index: 1;
-	margin-top:90px;
+    margin-top:90px;
 }
 /*------- 23. Youtube ------------*/
 
@@ -2311,7 +2340,7 @@ input.submit:hover {
 }
 
 #features-area {
-	background:#eeeeee;
+    background:#eeeeee;
 }
 
 
@@ -2321,10 +2350,10 @@ input.submit:hover {
 
 
 .actions button{
-	margin:0px 4px !important;
+    margin:0px 4px !important;
 }
 #mc-search {
-	    background: linear-gradient(to bottom, #eee 0%,#ddd 50%,#ddd 51%,#eee 100%);
+        background: linear-gradient(to bottom, #eee 0%,#ddd 50%,#ddd 51%,#eee 100%);
     border-radius: 15px;
     height: 30px;
     border: 2px solid #999;
@@ -2332,29 +2361,29 @@ input.submit:hover {
     margin: 0 10px;
 }
 #mc-download{
-	background:rgba(30,113,89,0.8);
+    background:rgba(30,113,89,0.8);
     border-radius: 15px;
     height: 30px;
     border: 3px solid rgba(30,113,89,0.8);
     width: 30px;
     margin: 0 10px;
-	color:#eee;
-	
-	
+    color:#eee;
+    
+    
 }
 #mc-download:hover{
-	/*position:absolute;*/
-	 margin-right:90px !important;
-	 border-radius:5px 0px 0px 5px;
-	 border-right:2px solid #fff;
-	 
+    /*position:absolute;*/
+     margin-right:90px !important;
+     border-radius:5px 0px 0px 5px;
+     border-right:2px solid #fff;
+     
 }
 #mc-download:after{
 
 }
 #mc-download:hover:after{
-	content:'Download';
-		background: rgba(30,113,89,1);
+    content:'Download';
+        background: rgba(30,113,89,1);
     /* border-radius: 15px; */
     height: 30px;
     border: 3px solid rgba(30,113,89,0.8);
@@ -2364,32 +2393,32 @@ input.submit:hover {
   
     position: absolute;
     line-height: 25px;
-	border-radius:0px 5px 5px 0px;
-	
+    border-radius:0px 5px 5px 0px;
+    
 }
 #mc-download:hover{
-	background:rgba(30,113,89,1);
+    background:rgba(30,113,89,1);
 }
 #mc-download i{color:#fff;
 }
 #mc-filter{
-	background:rgba(30,113,189,0.8);
+    background:rgba(30,113,189,0.8);
     border-radius: 15px;
     height: 30px;
     border: 3px solid rgba(30,113,189,0.8);
     width: 30px;
     margin: 0 10px;
-	color:#eee;
+    color:#eee;
 }
 #mc-filter:hover{
-	/*position:absolute;*/
-	 margin-right:93px !important;
-	 border-radius:5px 0px 0px 5px;
-	 border-right:2px solid #fff;
+    /*position:absolute;*/
+     margin-right:93px !important;
+     border-radius:5px 0px 0px 5px;
+     border-right:2px solid #fff;
 }
 #mc-filter:hover:after{
-	content:'Filter';
-		background: rgba(30,113,189,1);
+    content:'Filter';
+        background: rgba(30,113,189,1);
     /* border-radius: 15px; */
     height: 30px;
     border: 3px solid rgba(30,113,189,0.8);
@@ -2399,23 +2428,23 @@ input.submit:hover {
   
     position: absolute;
     line-height: 25px;
-	border-radius:0px 5px 5px 0px;
+    border-radius:0px 5px 5px 0px;
 }
 #mc-filter:hover{
-	background:rgba(30,113,189,1);
+    background:rgba(30,113,189,1);
 }
 #mc-filter i{color:#fff;
 }
 input.text {
-	    height: 30px;
+        height: 30px;
     color: #333;
     border-radius: 6px;
     border: 2px solid #999;
     padding: 0 4px;
 }
 .panel-body .search {
-	float:left
+    float:left
 }
 .panel-body .actions {
-	float:right
+    float:right
 }

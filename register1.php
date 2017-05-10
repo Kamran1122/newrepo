@@ -1,3 +1,93 @@
+<?php
+ ob_start();
+ session_start();
+ if( isset($_SESSION['user'])!="" ){
+  header("Location: dashboard2.php");
+ }
+ include_once 'config.php';
+
+$nameError = "";
+$emailError = "";
+$passError = "";
+ $error = false;
+
+ if ( isset($_POST['btn-signup']) ) {
+  
+  // clean user inputs to prevent sql injections
+  $name = trim($_POST['name']);
+  $name = strip_tags($name);
+  $name = htmlspecialchars($name);
+  
+  $email = trim($_POST['email']);
+  $email = strip_tags($email);
+  $email = htmlspecialchars($email);
+  
+  $pass = trim($_POST['pass']);
+  $pass = strip_tags($pass);
+  $pass = htmlspecialchars($pass);
+  
+  // basic name validation
+  if (empty($name)) {
+   $error = true;
+   $nameError = "Please enter your full name.";
+  } else if (strlen($name) < 3) {
+   $error = true;
+   $nameError = "Name must have atleat 3 characters.";
+  } else if (!preg_match("/^[a-zA-Z ]+$/",$name)) {
+   $error = true;
+   $nameError = "Name must contain alphabets and space.";
+  }
+  
+  //basic email validation
+  if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
+   $error = true;
+   $emailError = "Please enter valid email address.";
+  } else {
+   // check email exist or not
+   $query = "SELECT userEmail FROM users WHERE userEmail='$email'";
+   $result = mysqli_query($db,$query);
+   $count = mysqli_num_rows($result);
+   if($count!=0){
+    $error = true;
+    $emailError = "Provided Email is already in use.";
+   }
+  }
+  // password validation
+  if (empty($pass)){
+   $error = true;
+   $passError = "Please enter password.";
+  } else if(strlen($pass) < 6) {
+   $error = true;
+   $passError = "Password must have atleast 6 characters.";
+  }
+  
+  // password encrypt using SHA256();
+  $password = hash('sha256', $pass);
+  
+  // if there's no error, continue to signup
+  if( !$error ) {
+   
+   $query = "INSERT INTO users(userName,userEmail,userPass) VALUES('$name','$email','$password')";
+   $res = mysqli_query($db,$query);
+    
+   if ($res) {
+
+    $errTyp = "success";
+    $errMSG = "Successfully registered, you may login now";
+    unset($name);
+    unset($email);
+    unset($pass);
+    header("Location: login.php");
+   } else {
+    $errTyp = "danger";
+    $errMSG = "Something went wrong, try again later..."; 
+   } 
+    
+  }
+  
+ }
+?>
+
 <!doctype html>
 <html class="no-js" lang="zxx">
     <head>
@@ -82,24 +172,23 @@
 							    <h4 class="text-center" ><strong>TRY AppTech FREE FOR 14 DAYS</strong></h4>
 							    <div class="text-center" >Let's start to use your time efficiently!</div>
 							    <div style="margin-bottom: 10px;" class="loginpage-email-error"></div>
-							    <form id="login"  method="post" accept-charset="UTF-8">
-							        <input type="text" name="" placeholder="Enter full name" >
-							        <span class="text-danger" >this is the name</span>
-							        <input type="email" name="email" id="loginpage-email" value="" placeholder="E-mail"><span class="text-danger" >this is the text</span>
-							        <input type="password" name="password" id="loginpage-password" value="" placeholder="Password"><span class="text-danger" >the text</span>
+							    <form id="login"  method="post" accept-charset="UTF-8" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
+							        <input type="text" name="name" placeholder="Enter full name" >
+							        <span class="text-danger" > <?php echo $nameError; ?> </span>
+							        <input type="email" name="email" id="loginpage-email" value="" placeholder="E-mail"><span class="text-danger" ><?php echo $emailError; ?></span>
+							        <input type="password" name="pass" id="loginpage-password" value="" placeholder="Password"><span class="text-danger" ><?php echo $passError; ?></span>
 							        
 						            <!-- <input type="tel" id="registerpage-phone" > -->
 						            <div style="height:20px;" ></div>
 									<div class="col-md-offset-1 col-xs-12 col-md-6 ">
-										
-							    		<button name="submit" class="btn">START YOUR FREE TRIAL!</button>
+							    		<button name="btn-signup" class="btn">START YOUR FREE TRIAL!</button>
 									</div>
 								</form>
 							</div>
 							<hr>
 							<div class="row">
 							    <div class="col-xs-12 text-center">
-							        Do you have a Prisync account? <a >Sign in</a><br>
+							        Do you have a Prisync account? <a href="login.html" >Sign in</a><br>
 							       <div id="register-tos-pp" >
 							       	By registering, you agree to our <a href="">terms of service</a> and <a href="">privacy policy</a>. We'll occasionally send you account related emails.
 							       </div>
@@ -131,3 +220,4 @@ $("#registerpage-phone").intlTelInput({
 </script>
 </body>
 </html>
+<?php ob_end_flush(); ?>

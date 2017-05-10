@@ -1,13 +1,67 @@
+        
+
+
+        function proFormSub(userId){
+        var productName = $("#productName");
+        var productCode = $("#productCode");
+        var productCategory = $("#productCategory");
+        var productBrand = $("#productBrand");
+
+        var productNameInput = $("#proName").val();
+        var productCodeInput = $("#proCode").val();
+        var productCategoryInput = $("#proCategory").val();
+        var productBrandInput = $("#proBrand").val();
+        var userId = userId;
+
+        if (!productNameInput) {
+            productName.html("This field is required");
+        }
+        else if (!productCodeInput) {
+            productCode.html("This field is required");
+        }
+        else if (!productCategoryInput) {
+            productCategory.html("This field is required");
+        }
+        else if (!productBrandInput) {
+            productBrand.html("This field is required");
+        }
+       
+
+
+        if (productNameInput !="" || productCodeInput !="" || productCategoryInput !="" || productBrandInput !="") {
+        $.post('product_submit.php', {
+            userId,userId,
+            productNameInput:productNameInput,
+            productCodeInput:productCodeInput,
+            productCategoryInput:productCategoryInput,
+            productBrandInput:productBrandInput,
+            
+        },function(data) {
+            console.log("product submitted");
+            $(".form-div").slideUp("slow");
+            $("#products-div").html(data);
+        });
+
+            }
+    }
+
+
+
+    function btnUrl(index){
+
+      $("#"+index).slideDown("slow");
+      
+      }
+
+    function btnClose(index){
+        $("#"+index).slideUp("slow");    
+    }
+
+
 (function ($) {
  "use strict";
- 
-    
 
-
-    /*--
-    Dashboard trial form 
-    ------------------------*/    
-    $("#formSlideDown").click(function(){
+          $("#formSlideDown").click(function(){
                 $(".form-div").slideDown("slow");
             });
             $("#formSlideUp").click(function(){
